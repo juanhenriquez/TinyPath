@@ -2,11 +2,10 @@ import { withClerkMiddleware, getAuth } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-// Set the paths that don't require the user to be signed in
-const publicPaths = ["/auth/sign-in*", "/auth/sign-up*"];
+const privatePaths = ["/dashboard*", "/links*", "/api*"];
 
-const isPublic = (path: string) => {
-  return publicPaths.find((x) =>
+const checkIsPrivate = (path: string) => {
+  return privatePaths.find((x) =>
     path.match(new RegExp(`^${x}$`.replace("*$", "($|/)")))
   );
 };
@@ -14,6 +13,7 @@ const isPublic = (path: string) => {
 export default withClerkMiddleware((request: NextRequest) => {
   const { userId } = getAuth(request);
 
+  const isPrivate = checkIsPrivate(request.nextUrl.pathname);
   const dashboard = new URL("/dashboard", request.url);
   const signInUrl = new URL("/auth/sign-in", request.url);
 
@@ -27,11 +27,7 @@ export default withClerkMiddleware((request: NextRequest) => {
     }
   }
 
-  if (isPublic(request.nextUrl.pathname)) {
-    return NextResponse.next();
-  }
-
-  if (!userId) {
+  if (!userId && isPrivate) {
     signInUrl.searchParams.set("redirect_url", request.url);
     return NextResponse.redirect(signInUrl);
   }
