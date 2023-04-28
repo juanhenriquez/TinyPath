@@ -11,7 +11,7 @@
     "db:seed": "turbo run db:seed",
     "dev": "turbo run dev",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "generate": "turbo run generate",
+    "db:generate": "turbo run db:generate",
     "lint": "turbo run lint"
   },
   "devDependencies": {
@@ -23,8 +23,5 @@
   "workspaces": [
     "apps/*",
     "packages/*"
-  ],
-  "dependencies": {
-    "@radix-ui/react-dialog": "^1.0.3"
-  }
+  ]
 }
