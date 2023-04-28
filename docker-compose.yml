@@ -1,19 +1,19 @@
-version: "3"
+version: "3.8"
 
 volumes:
-  database:
+  db:
     driver: local
 
 services:
-  mysql:
+  postgres:
     platform: linux/amd64
-    image: mysql:8.0.32
-    container_name: turborepo_mysql
+    image: postgres:14.1-alpine
+    container_name: tinypath_postgres
     restart: always
     ports:
-      - 3306:3306
+      - 5432:5432
     environment:
-      MYSQL_DATABASE: turborepo
-      MYSQL_ALLOW_EMPTY_PASSWORD: 1
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: sonaisawesome
     volumes:
-      - database:/var/lib/mysql
+      - db:/var/lib/postgresql/data
