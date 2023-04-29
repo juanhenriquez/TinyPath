@@ -2,6 +2,7 @@
 
 import { PropsWithChildren } from "react";
 import { ThemeProvider } from "next-themes";
+import { TooltipProvider } from "./ui/Tooltip";
 
 export function Providers({ children }: PropsWithChildren) {
   return (
@@ -10,7 +11,7 @@ export function Providers({ children }: PropsWithChildren) {
       defaultTheme="dark"
       themes={["dark", "light"]}
     >
-      {children}
+      <TooltipProvider>{children}</TooltipProvider>
     </ThemeProvider>
   );
 }

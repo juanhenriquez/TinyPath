@@ -12,7 +12,6 @@ import FileDownload from "@/assets/icons/file-download.svg";
 import {
   Tooltip,
   TooltipContent,
-  TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/Tooltip";
 import CreateLinkButton from "./CreateLinkButton";
@@ -67,26 +66,22 @@ export default function DashboardActionsToolbar() {
         onValueChange={onChangeLayout}
         type="single"
       >
-        <TooltipProvider>
-          <Tooltip>
-            <ToolbarToggleItem value="table" asChild>
-              <TooltipTrigger>
-                <TableIcon width={16} height={16} />
-              </TooltipTrigger>
-            </ToolbarToggleItem>
-            <TooltipContent sideOffset={8}>Table Layout</TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
-        <TooltipProvider>
-          <Tooltip>
-            <ToolbarToggleItem value="group" asChild>
-              <TooltipTrigger>
-                <Rows01Icon width={16} height={16} />
-              </TooltipTrigger>
-            </ToolbarToggleItem>
-            <TooltipContent sideOffset={8}>Group Layout</TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
+        <Tooltip>
+          <ToolbarToggleItem value="table" asChild>
+            <TooltipTrigger>
+              <TableIcon width={16} height={16} />
+            </TooltipTrigger>
+          </ToolbarToggleItem>
+          <TooltipContent sideOffset={8}>Table Layout</TooltipContent>
+        </Tooltip>
+        <Tooltip>
+          <ToolbarToggleItem value="group" asChild>
+            <TooltipTrigger>
+              <Rows01Icon width={16} height={16} />
+            </TooltipTrigger>
+          </ToolbarToggleItem>
+          <TooltipContent sideOffset={8}>Group Layout</TooltipContent>
+        </Tooltip>
       </ToolbarToogleGroup>
       <ToolbarSeparator />
       <div className="flex gap-2">

@@ -13,45 +13,65 @@ import { cn } from "@/utils";
 
 // components
 import { Button, buttonVariants } from "@/components/ui/Button";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/Tooltip";
 
 export default function LinkActions({ link }: { link: Link }) {
   return (
     <div className="flex gap-2 justify-end">
-      <NextLink
-        className={cn(
-          buttonVariants({
-            size: "xs",
-            variant: "ghost",
-          }),
-          "h-auto px-2 py-2"
-        )}
-        target="_blank"
-        href={link.shortened_uri}
-      >
-        <LinkExternal width={12} height={12} />
-      </NextLink>
-      <Button
-        size="xs"
-        variant="ghost"
-        className="h-auto px-2 py-2"
-        onClick={() => {
-          navigator.clipboard.writeText(link.shortened_uri);
-        }}
-      >
-        <CopyIcon width={12} height={12} />
-      </Button>
-      <NextLink
-        className={cn(
-          buttonVariants({
-            size: "xs",
-            variant: "ghost",
-          }),
-          "h-auto px-2 py-2"
-        )}
-        href={`/links/${link.id}`}
-      >
-        <EditIcon width={12} height={12} />
-      </NextLink>
+      <Tooltip>
+        <TooltipTrigger>
+          <a
+            className={cn(
+              buttonVariants({
+                size: "xs",
+                variant: "ghost",
+              }),
+              "h-auto px-2 py-2"
+            )}
+            target="_blank"
+            href={link.shortened_uri}
+          >
+            <LinkExternal width={12} height={12} />
+          </a>
+        </TooltipTrigger>
+        <TooltipContent>Open Link</TooltipContent>
+      </Tooltip>
+      <Tooltip>
+        <TooltipTrigger>
+          <Button
+            size="xs"
+            variant="ghost"
+            className="h-auto px-2 py-2"
+            onClick={() => {
+              navigator.clipboard.writeText(link.shortened_uri);
+            }}
+          >
+            <CopyIcon width={12} height={12} />
+          </Button>
+        </TooltipTrigger>
+        <TooltipContent>Copy Link</TooltipContent>
+      </Tooltip>
+      <Tooltip>
+        <TooltipTrigger>
+          <NextLink
+            className={cn(
+              buttonVariants({
+                size: "xs",
+                variant: "ghost",
+              }),
+              "h-auto px-2 py-2"
+            )}
+            href={`/links/${link.id}`}
+          >
+            <EditIcon width={12} height={12} />
+          </NextLink>
+        </TooltipTrigger>
+        <TooltipContent>Edit Link</TooltipContent>
+      </Tooltip>
     </div>
   );
 }
