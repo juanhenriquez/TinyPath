@@ -1,10 +1,10 @@
-import { prisma } from "@tinypath/database";
 import { notFound } from "next/navigation";
-import BackToAllLinks from "./BackToAllLinks";
 
-function getLink(linkId: string) {
-  return prisma.link.findUnique({ where: { id: linkId } });
-}
+// libs
+import { getLink } from "@/lib/links";
+
+// components
+import BackToAllLinks from "./BackToAllLinks";
 
 export default async function LinkPage({
   params,
