@@ -85,7 +85,8 @@ export default function DashboardActionsToolbar() {
       <ToolbarSeparator />
       <div className="flex gap-2">
         <ToolbarLink
-          target="_blank"
+          target="_self"
+          download="links.csv"
           href="/api/links/download"
           className={buttonVariants({
             size: 'xs',
