@@ -33,13 +33,14 @@ const createOrUpdateLinkFormSchema = z.object({
   link: z.string().regex(urlRegex, 'Invalid URL'),
 });
 
-export default function CreateLinkButton({
+function DialogForm({
   currentLink,
+  onDialogClose,
 }: {
   currentLink?: Link;
+  onDialogClose: () => void;
 }) {
   const [isPending, startTransition] = useTransition();
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   // keep track of client side errors.
   const router = useRouter();
@@ -80,6 +81,7 @@ export default function CreateLinkButton({
       return data;
     },
     {
+      throwOnError: false,
       onSuccess: () => {
         startTransition(() => {
           onDialogClose();
@@ -110,12 +112,96 @@ export default function CreateLinkButton({
     }
   }
 
-  function onDialogClose() {
+  function onClose() {
     reset();
-    setErrors(null);
-    setIsDialogOpen(false);
+    onDialogClose();
   }
 
+  return (
+    <DialogContent>
+      <DialogHeader>
+        <DialogTitle>{currentLink ? 'Update' : 'Create'} Link</DialogTitle>
+        <DialogDescription>
+          Turn long, complex URLs into short, easy-to-share TinyPath links.
+        </DialogDescription>
+      </DialogHeader>
+      <div className="flex flex-col items-end gap-4 py-4">
+        <div className="flex w-full flex-col gap-2">
+          <Label htmlFor="name">Original URL</Label>
+          <Input
+            id="link"
+            type="url"
+            value={linkOriginalUrl}
+            onChange={e => {
+              setLinkOriginalUrl(e.target.value);
+              setErrors((v: any) => ({ ...v, link: null }));
+            }}
+            placeholder="https://twitter/juanhenriqz"
+          />
+          {errors?.link?._errors.map((item, i) => (
+            <span key={i} className="text-destructive-foreground text-xs">
+              {item}
+            </span>
+          ))}
+        </div>
+        <div className="flex w-full flex-col gap-2">
+          <Label htmlFor="name">
+            Name{' '}
+            <span className="text-xs text-black/60 dark:text-white/60">
+              (Optional)
+            </span>
+          </Label>
+          <Input
+            id="name"
+            type="text"
+            value={name}
+            onChange={e => {
+              setName(e.target.value);
+              setErrors((v: any) => ({ ...v, name: null }));
+            }}
+            placeholder="My Awesome Link"
+          />
+          {errors?.name?._errors.map((item, i) => (
+            <span key={i} className="text-destructive-foreground text-xs">
+              {item}
+            </span>
+          ))}
+        </div>
+        {error && (
+          <span className="text-destructive-foreground text-xs">
+            {error.message}
+          </span>
+        )}
+        <div className="flex gap-2">
+          <Button variant="ghost" onClick={onClose}>
+            Cancel
+          </Button>
+          <Button
+            className="gap-2"
+            disabled={!linkOriginalUrl || isMutating}
+            onClick={onCreateLink}
+          >
+            {isMutating && <Spinner width={16} height={16} />}
+            {isMutating
+              ? currentLink
+                ? 'Updating...'
+                : 'Creating...'
+              : currentLink
+              ? 'Update'
+              : 'Create'}
+          </Button>
+        </div>
+      </div>
+    </DialogContent>
+  );
+}
+
+export default function CreateOrUpdateLinkButton({
+  currentLink,
+}: {
+  currentLink?: Link;
+}) {
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
   return (
     <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
       <ToolbarButton asChild>
@@ -126,81 +212,12 @@ export default function CreateLinkButton({
           </Button>
         </DialogTrigger>
       </ToolbarButton>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>{currentLink ? 'Update' : 'Create'} Link</DialogTitle>
-          <DialogDescription>
-            Turn long, complex URLs into short, easy-to-share TinyPath links.
-          </DialogDescription>
-        </DialogHeader>
-        <div className="flex flex-col items-end gap-4 py-4">
-          <div className="flex w-full flex-col gap-2">
-            <Label htmlFor="name">Original URL</Label>
-            <Input
-              id="link"
-              type="url"
-              value={linkOriginalUrl}
-              onChange={e => {
-                setLinkOriginalUrl(e.target.value);
-                setErrors((v: any) => ({ ...v, link: null }));
-              }}
-              placeholder="https://twitter/juanhenriqz"
-            />
-            {errors?.link?._errors.map((item, i) => (
-              <span key={i} className="text-destructive-foreground text-xs">
-                {item}
-              </span>
-            ))}
-          </div>
-          <div className="flex w-full flex-col gap-2">
-            <Label htmlFor="name">
-              Name{' '}
-              <span className="text-xs text-black/60 dark:text-white/60">
-                (Optional)
-              </span>
-            </Label>
-            <Input
-              id="name"
-              type="text"
-              value={name}
-              onChange={e => {
-                setName(e.target.value);
-                setErrors((v: any) => ({ ...v, name: null }));
-              }}
-              placeholder="My Awesome Link"
-            />
-            {errors?.name?._errors.map((item, i) => (
-              <span key={i} className="text-destructive-foreground text-xs">
-                {item}
-              </span>
-            ))}
-          </div>
-          {error && (
-            <span className="text-destructive-foreground text-xs">
-              {error.message}
-            </span>
-          )}
-          <div className="flex gap-2">
-            <Button variant="ghost" onClick={onDialogClose}>
-              Cancel
-            </Button>
-            <Button
-              className="gap-2"
-              disabled={!linkOriginalUrl || isMutating}
-              onClick={onCreateLink}
-            >
-              {isMutating && <Spinner width={16} height={16} />}
-              {isMutating
-                ? currentLink
-                  ? 'Updating...'
-                  : 'Creating...'
-                : currentLink
-                ? 'Update'
-                : 'Create'}
-            </Button>
-          </div>
-        </div>
-      </DialogContent>
+      {isDialogOpen && (
+        <DialogForm
+          currentLink={currentLink}
+          onDialogClose={() => setIsDialogOpen(false)}
+        />
+      )}
     </Dialog>
   );
 }

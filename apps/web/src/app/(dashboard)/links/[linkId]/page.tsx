@@ -5,7 +5,7 @@ import { getLink } from '@/lib/links';
 
 // components
 import BackToAllLinks from './BackToAllLinks';
-import CreateLinkButton from '../../dashboard/DashboardActionsToolbar/CreateLinkButton';
+import CreateOrUpdateLinkButton from '../../../../components/CreateOrUpdateLinkButton';
 import { ToolbarRoot } from '@/components/ui/Toolbar';
 
 export default async function LinkPage({
@@ -33,7 +33,7 @@ export default async function LinkPage({
             </div>
             <div>
               <ToolbarRoot>
-                <CreateLinkButton currentLink={link} />
+                <CreateOrUpdateLinkButton currentLink={link} />
               </ToolbarRoot>
             </div>
           </div>

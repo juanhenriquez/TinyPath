@@ -14,7 +14,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '@/components/ui/Tooltip';
-import CreateLinkButton from './CreateLinkButton';
+import CreateOrUpdateLinkButton from '@/components/CreateOrUpdateLinkButton';
 import SortLinksDropdownMenu from './SortLinksDrodownMenu';
 import {
   ToolbarLink,
@@ -97,7 +97,7 @@ export default function DashboardActionsToolbar() {
           <FileDownload width={16} height={16} />
           Export
         </ToolbarLink>
-        <CreateLinkButton />
+        <CreateOrUpdateLinkButton />
       </div>
     </ToolbarRoot>
   );
