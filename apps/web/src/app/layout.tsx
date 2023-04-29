@@ -11,7 +11,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <ClerkProvider>
-        <body className="bg-white dark:bg-zinc-950 h-full">
+        <body className="bg-white dark:bg-zinc-950">
           <Providers>{children}</Providers>
         </body>
       </ClerkProvider>

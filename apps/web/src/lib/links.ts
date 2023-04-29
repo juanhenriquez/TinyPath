@@ -1,6 +1,8 @@
-import { auth } from "@clerk/nextjs/app-beta";
-import { prisma } from "@tinypath/database";
 import { cache } from "react";
+import { auth } from "@clerk/nextjs/app-beta";
+import { Link, prisma } from "@tinypath/database";
+
+import initialLinks from "@/data/links.json";
 
 type SortOption = "asc" | "desc";
 
@@ -33,6 +35,21 @@ export const getLinks = cache(
     }
 
     const data = await prisma.link.findMany({ orderBy, where: { userId } });
+
+    // NOTE: THIS IS ONLY FOR DEMO PURPOSES
+    // If the user doesn't have any links, create some initial links
+    if (!data || data.length === 0) {
+      await prisma.link.createMany({
+        data: initialLinks.map((link) => ({
+          ...link,
+          userId,
+          created_date: new Date(link.created_date),
+        })),
+      });
+
+      return initialLinks as unknown as Link[];
+    }
+
     return data;
   }
 );

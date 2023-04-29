@@ -47,7 +47,7 @@ const ToolbarToggleItem = forwardRef<
   <ToolbarPrimitive.ToggleItem
     ref={ref}
     className={cn(
-      "flex-shrink-0 flex-grow-0 basis-auto text-muted-foreground p-[6px] rounded inline-flex text-xs leading-none items-center justify-center outline-none hover:bg-muted hover:text-muted-foreground focus:relative focus:shadow-[0_0_0_2px] focus:shadow-primary/70 data-[state=on]:bg-primary data-[state=on]:text-primary-foreground",
+      "flex-shrink-0 flex-grow-0 basis-auto text-muted-foreground p-[6px] rounded inline-flex text-xs leading-none items-center justify-center outline-none hover:bg-muted hover:text-muted-foreground focus:relative focus:shadow-[0_0_0_2px] focus:shadow-primary/70 data-[state=on]:bg-muted data-[state=on]:text-foreground",
       className
     )}
     {...props}

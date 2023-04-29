@@ -16,7 +16,7 @@ export default async function LinkPage({
   if (!link) notFound();
 
   return (
-    <div className="flex w-full h-full px-4 sm:px-6 py-12 max-w-4xl mx-auto items-start">
+    <div className="flex w-full px-4 sm:px-6 py-12 max-w-4xl mx-auto items-start">
       <div className="flex flex-col gap-6 w-full items-start">
         <BackToAllLinks />
         <div className="w-full overflow-hidden bg-card shadow border-[0.5px] border-border rounded-lg">

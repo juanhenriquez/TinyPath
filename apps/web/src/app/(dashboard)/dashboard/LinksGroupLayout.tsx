@@ -3,8 +3,9 @@ import { Link } from "@tinypath/database";
 
 // components
 import { buttonVariants } from "@/components/ui/Button";
+import LinkActions from "./LinkActions";
 
-interface LinksListLayoutProps {
+interface LinksGroupLayoutProps {
   links: Link[];
   searchParams: {
     count?: "desc" | "asc";
@@ -12,10 +13,10 @@ interface LinksListLayoutProps {
   };
 }
 
-export default function LinksListLayout({
+export default function LinksGroupLayout({
   links,
   searchParams,
-}: LinksListLayoutProps) {
+}: LinksGroupLayoutProps) {
   // Group links by date by creating an object with the date as
   // the key and an array of links as the value.
   const linksGroupedByDate = links.length
@@ -67,25 +68,21 @@ export default function LinksListLayout({
                   })
                   .map((link) => (
                     <div
-                      className="border-border h-[44px] grid grid-cols-[160px,1fr,fit-content(100%)] items-center gap-3 border-b px-4 last:border-b-0 justify-between"
+                      className="border-border py-2 sm:h-[44px] grid grid-cols-[1fr,fit-content(100%)] items-center sm:gap-3 border-b px-4 last:border-b-0 sm:justify-between"
                       key={link.id}
                     >
-                      <div className="text-xs overflow-hidden text-ellipsis whitespace-nowrap font-medium">
-                        {link.name || link.uri}
+                      <div className="flex flex-col sm:grid sm:grid-cols-[160px,1fr]">
+                        <div className="max-w-[160px] sm:max-w-none text-xs overflow-hidden text-ellipsis whitespace-nowrap font-medium">
+                          {link.name || link.uri}
+                        </div>
+                        <div className="text-xs items-center sm:border-l sm:border-border sm:pl-3">
+                          {link.count}{" "}
+                          <span className="text-muted-foreground">Clicks</span>
+                        </div>
                       </div>
-                      <div className="text-xs items-center border-l border-border pl-3">
-                        {link.count}{" "}
-                        <span className="text-muted-foreground">Clicks</span>
+                      <div className="flex ml-auto">
+                        <LinkActions link={link} />
                       </div>
-                      <NextLink
-                        className={buttonVariants({
-                          size: "xs",
-                          variant: "ghost",
-                        })}
-                        href={`/links/${link.id}`}
-                      >
-                        Edit
-                      </NextLink>
                     </div>
                   ))}
               </div>
