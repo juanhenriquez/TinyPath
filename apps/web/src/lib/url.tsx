@@ -1,7 +1,10 @@
 import { nanoid } from 'nanoid';
 
-const baseUrl =
-  process.env.BASE_URL || process.env.VERCEL_URL || 'http://localhost:3000';
+const PREVIEW_URL = process.env.VERCEL_URL
+  ? `https://${process.env.VERCEL_URL}`
+  : null;
+
+const baseUrl = process.env.BASE_URL || PREVIEW_URL || 'http://localhost:3000';
 
 export const urlRegex =
   /^https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&\/=]*)$/;
