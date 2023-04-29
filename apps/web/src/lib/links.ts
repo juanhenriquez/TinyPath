@@ -1,3 +1,4 @@
+import { auth } from "@clerk/nextjs/app-beta";
 import { prisma } from "@tinypath/database";
 import { cache } from "react";
 
@@ -19,6 +20,8 @@ export const getLinks = cache(
     count?: SortOption;
     createdAt?: SortOption;
   }) => {
+    const { userId } = auth();
+
     let orderBy = [];
 
     if (count) {
@@ -29,7 +32,7 @@ export const getLinks = cache(
       orderBy.push({ created_date: createdAt });
     }
 
-    const data = await prisma.link.findMany({ orderBy });
+    const data = await prisma.link.findMany({ orderBy, where: { userId } });
     return data;
   }
 );
