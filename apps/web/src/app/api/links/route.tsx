@@ -1,19 +1,19 @@
-import { z } from "zod";
-import { NextResponse } from "next/server";
-import { prisma } from "@tinypath/database";
-import { auth } from "@clerk/nextjs/app-beta";
-import { getShortenedUrlComponents } from "@/lib/url";
+import { z } from 'zod';
+import { NextResponse } from 'next/server';
+import { prisma } from '@tinypath/database';
+import { auth } from '@clerk/nextjs/app-beta';
+import { getShortenedUrlComponents } from '@/lib/url';
 
 const createUrlInputSchema = z.object({
   name: z.string().optional(),
-  link: z.string().url("Invalid URL"),
+  link: z.string().url('Invalid URL'),
 });
 
 export async function POST(request: Request) {
   const { userId } = auth();
 
   if (!userId) {
-    return NextResponse.json({ message: "Not Authorized" }, { status: 401 });
+    return NextResponse.json({ message: 'Not Authorized' }, { status: 401 });
   }
 
   const body = await request.json();
@@ -23,7 +23,7 @@ export async function POST(request: Request) {
   if (!dataValidation.success) {
     return NextResponse.json(
       { message: dataValidation.error.message },
-      { status: 400 }
+      { status: 400 },
     );
   }
 
@@ -31,7 +31,7 @@ export async function POST(request: Request) {
   const urlComponents = getShortenedUrlComponents(data.link);
 
   if (!urlComponents) {
-    return NextResponse.json({ message: "Invalid URL" }, { status: 400 });
+    return NextResponse.json({ message: 'Invalid URL' }, { status: 400 });
   }
 
   const existingLink = await prisma.link.findUnique({
@@ -40,8 +40,8 @@ export async function POST(request: Request) {
 
   if (existingLink) {
     return NextResponse.json(
-      { message: "This link already exists" },
-      { status: 400 }
+      { message: 'This link already exists' },
+      { status: 400 },
     );
   }
 

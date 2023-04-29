@@ -1,19 +1,19 @@
-import { prisma } from "@tinypath/database";
-import { redirect } from "next/navigation";
-import { NextRequest, NextResponse } from "next/server";
+import { prisma } from '@tinypath/database';
+import { redirect } from 'next/navigation';
+import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { linkShortenedId: string } }
+  { params }: { params: { linkShortenedId: string } },
 ) {
   if (!params.linkShortenedId) {
     return NextResponse.json(
       {
-        error: "No link shortened ID provided.",
+        error: 'No link shortened ID provided.',
       },
       {
         status: 400,
-      }
+      },
     );
   }
 
@@ -24,7 +24,7 @@ export async function GET(
   });
 
   if (!link) {
-    return NextResponse.json({ error: "Link not found." }, { status: 404 });
+    return NextResponse.json({ error: 'Link not found.' }, { status: 404 });
   }
 
   await prisma.link.update({
@@ -35,6 +35,6 @@ export async function GET(
       count: link.count + 1,
     },
   });
-  
+
   redirect(link.uri);
 }

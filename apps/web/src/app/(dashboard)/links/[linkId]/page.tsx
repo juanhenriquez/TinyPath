@@ -1,12 +1,12 @@
-import { notFound } from "next/navigation";
+import { notFound } from 'next/navigation';
 
 // libs
-import { getLink } from "@/lib/links";
+import { getLink } from '@/lib/links';
 
 // components
-import BackToAllLinks from "./BackToAllLinks";
-import CreateLinkButton from "../../dashboard/DashboardActionsToolbar/CreateLinkButton";
-import { ToolbarRoot } from "@/components/ui/Toolbar";
+import BackToAllLinks from './BackToAllLinks';
+import CreateLinkButton from '../../dashboard/DashboardActionsToolbar/CreateLinkButton';
+import { ToolbarRoot } from '@/components/ui/Toolbar';
 
 export default async function LinkPage({
   params,
@@ -18,16 +18,16 @@ export default async function LinkPage({
   if (!link) notFound();
 
   return (
-    <div className="flex w-full px-4 sm:px-6 py-12 max-w-4xl mx-auto items-start">
-      <div className="flex flex-col gap-6 w-full items-start">
+    <div className="mx-auto flex w-full max-w-4xl items-start px-4 py-12 sm:px-6">
+      <div className="flex w-full flex-col items-start gap-6">
         <BackToAllLinks />
-        <div className="w-full overflow-hidden bg-card shadow border-[0.5px] border-border rounded-lg">
-          <div className="flex justify-between px-4 py-6 sm:px-6 w-full">
+        <div className="bg-card border-border w-full overflow-hidden rounded-lg border-[0.5px] shadow">
+          <div className="flex w-full justify-between px-4 py-6 sm:px-6">
             <div className="flex flex-col">
-              <h3 className="text-xs font-semibold text-foreground">
+              <h3 className="text-foreground text-xs font-semibold">
                 {link.name || link.uri}
               </h3>
-              <p className="max-w-2xl text-xs text-muted-foreground">
+              <p className="text-muted-foreground max-w-2xl text-xs">
                 {link.shortened_uri}
               </p>
             </div>
@@ -37,47 +37,47 @@ export default async function LinkPage({
               </ToolbarRoot>
             </div>
           </div>
-          <div className="border-t-[0.5px] border-border">
-            <dl className="divide-y-[0.5px] divide-border">
+          <div className="border-border border-t-[0.5px]">
+            <dl className="divide-border divide-y-[0.5px]">
               {link.name && (
                 <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                  <dt className="text-xs font-medium text-foreground">Name</dt>
-                  <dd className="mt-1 text-xs leading-6 text-muted-foreground sm:col-span-2 sm:mt-0">
+                  <dt className="text-foreground text-xs font-medium">Name</dt>
+                  <dd className="text-muted-foreground mt-1 text-xs leading-6 sm:col-span-2 sm:mt-0">
                     {link.name}
                   </dd>
                 </div>
               )}
               <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                <dt className="text-xs font-medium text-foreground">
+                <dt className="text-foreground text-xs font-medium">
                   Original URL
                 </dt>
-                <dd className="mt-1 text-xs leading-6 text-muted-foreground sm:col-span-2 sm:mt-0">
+                <dd className="text-muted-foreground mt-1 text-xs leading-6 sm:col-span-2 sm:mt-0">
                   {link.uri}
                 </dd>
               </div>
               <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                <dt className="text-xs font-medium text-foreground">
+                <dt className="text-foreground text-xs font-medium">
                   Shortened URL
                 </dt>
-                <dd className="mt-1 text-xs leading-6 text-muted-foreground sm:col-span-2 sm:mt-0">
+                <dd className="text-muted-foreground mt-1 text-xs leading-6 sm:col-span-2 sm:mt-0">
                   {link.shortened_uri}
                 </dd>
               </div>
               <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                <dt className="text-xs font-medium text-foreground">Clicks</dt>
-                <dd className="mt-1 text-xs leading-6 text-muted-foreground sm:col-span-2 sm:mt-0">
+                <dt className="text-foreground text-xs font-medium">Clicks</dt>
+                <dd className="text-muted-foreground mt-1 text-xs leading-6 sm:col-span-2 sm:mt-0">
                   {link.count}
                 </dd>
               </div>
               <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                <dt className="text-xs font-medium text-foreground">
+                <dt className="text-foreground text-xs font-medium">
                   Created At
                 </dt>
-                <dd className="mt-1 text-xs leading-6 text-muted-foreground sm:col-span-2 sm:mt-0">
-                  {new Date(link.created_date).toLocaleDateString("en-US", {
-                    weekday: "short",
-                    month: "long",
-                    day: "numeric",
+                <dd className="text-muted-foreground mt-1 text-xs leading-6 sm:col-span-2 sm:mt-0">
+                  {new Date(link.created_date).toLocaleDateString('en-US', {
+                    weekday: 'short',
+                    month: 'long',
+                    day: 'numeric',
                   })}
                 </dd>
               </div>

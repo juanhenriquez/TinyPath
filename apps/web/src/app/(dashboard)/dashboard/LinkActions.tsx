@@ -1,36 +1,36 @@
-"use client";
+'use client';
 
-import NextLink from "next/link";
-import { Link } from "@tinypath/database";
+import NextLink from 'next/link';
+import { Link } from '@tinypath/database';
 
 // icons
-import EditIcon from "@/assets/icons/edit.svg";
-import CopyIcon from "@/assets/icons/copy.svg";
-import LinkExternal from "@/assets/icons/link-external.svg";
+import EditIcon from '@/assets/icons/edit.svg';
+import CopyIcon from '@/assets/icons/copy.svg';
+import LinkExternal from '@/assets/icons/link-external.svg';
 
 // utils
-import { cn } from "@/utils";
+import { cn } from '@/utils';
 
 // components
-import { Button, buttonVariants } from "@/components/ui/Button";
+import { Button, buttonVariants } from '@/components/ui/Button';
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from "@/components/ui/Tooltip";
+} from '@/components/ui/Tooltip';
 
 export default function LinkActions({ link }: { link: Link }) {
   return (
-    <div className="flex gap-2 justify-end">
+    <div className="flex justify-end gap-2">
       <Tooltip>
         <TooltipTrigger asChild>
           <a
             className={cn(
               buttonVariants({
-                size: "xs",
-                variant: "ghost",
+                size: 'xs',
+                variant: 'ghost',
               }),
-              "h-auto px-2 py-2"
+              'h-auto px-2 py-2',
             )}
             target="_blank"
             href={link.shortened_uri}
@@ -60,10 +60,10 @@ export default function LinkActions({ link }: { link: Link }) {
           <NextLink
             className={cn(
               buttonVariants({
-                size: "xs",
-                variant: "ghost",
+                size: 'xs',
+                variant: 'ghost',
               }),
-              "h-auto px-2 py-2"
+              'h-auto px-2 py-2',
             )}
             href={`/links/${link.id}`}
           >

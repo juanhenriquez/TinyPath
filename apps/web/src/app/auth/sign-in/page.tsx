@@ -1,8 +1,8 @@
-import { SignIn } from "@clerk/nextjs/app-beta";
+import { SignIn } from '@clerk/nextjs/app-beta';
 
 export default function Page() {
   return (
-    <div className="flex w-full min-h-screen items-center justify-center">
+    <div className="flex min-h-screen w-full items-center justify-center">
       <SignIn signUpUrl="/auth/sign-up" afterSignInUrl="/dashboard" />
     </div>
   );

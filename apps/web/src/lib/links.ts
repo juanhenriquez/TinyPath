@@ -1,10 +1,14 @@
-import { cache } from "react";
-import { auth } from "@clerk/nextjs/app-beta";
-import { Link, prisma } from "@tinypath/database";
+import 'server-only';
 
-import initialLinks from "@/data/links.json";
+import { cache } from 'react';
+import { auth } from '@clerk/nextjs/app-beta';
+import { Link, prisma } from '@tinypath/database';
 
-type SortOption = "asc" | "desc";
+import initialLinks from '@/data/links.json';
+
+import { env } from '@/config/env/server';
+
+type SortOption = 'asc' | 'desc';
 
 /**
  * Get all links created by the user and sort them by count and created date.
@@ -17,7 +21,7 @@ type SortOption = "asc" | "desc";
 export const getLinks = cache(
   async ({
     count,
-    createdAt = "desc",
+    createdAt = 'desc',
   }: {
     count?: SortOption;
     createdAt?: SortOption;
@@ -40,9 +44,10 @@ export const getLinks = cache(
     // If the user doesn't have any links, create some initial links
     if (!data || data.length === 0) {
       await prisma.link.createMany({
-        data: initialLinks.map((link) => ({
+        data: initialLinks.map(link => ({
           ...link,
           userId,
+          shortened_uri: `${env.baseUrl}/${link.raw_shortened_path_id}`,
           created_date: new Date(link.created_date),
         })),
       });
@@ -51,7 +56,7 @@ export const getLinks = cache(
     }
 
     return data;
-  }
+  },
 );
 
 /**

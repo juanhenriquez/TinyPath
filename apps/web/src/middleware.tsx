@@ -1,12 +1,12 @@
-import { withClerkMiddleware, getAuth } from "@clerk/nextjs/server";
-import { NextResponse } from "next/server";
-import type { NextRequest } from "next/server";
+import { withClerkMiddleware, getAuth } from '@clerk/nextjs/server';
+import { NextResponse } from 'next/server';
+import type { NextRequest } from 'next/server';
 
-const privatePaths = ["/dashboard*", "/links*", "/api*"];
+const privatePaths = ['/dashboard*', '/links*', '/api*'];
 
 const checkIsPrivate = (path: string) => {
-  return privatePaths.find((x) =>
-    path.match(new RegExp(`^${x}$`.replace("*$", "($|/)")))
+  return privatePaths.find(x =>
+    path.match(new RegExp(`^${x}$`.replace('*$', '($|/)'))),
   );
 };
 
@@ -14,12 +14,12 @@ export default withClerkMiddleware((request: NextRequest) => {
   const { userId } = getAuth(request);
 
   const isPrivate = checkIsPrivate(request.nextUrl.pathname);
-  const dashboard = new URL("/dashboard", request.url);
-  const signInUrl = new URL("/auth/sign-in", request.url);
+  const dashboard = new URL('/dashboard', request.url);
+  const signInUrl = new URL('/auth/sign-in', request.url);
 
   // Homepage redirects to dashboard if signed in
   // otherwise redirects to sign in page.
-  if (request.nextUrl.pathname === "/") {
+  if (request.nextUrl.pathname === '/') {
     if (userId) {
       return NextResponse.redirect(dashboard);
     } else {
@@ -28,7 +28,7 @@ export default withClerkMiddleware((request: NextRequest) => {
   }
 
   if (!userId && isPrivate) {
-    signInUrl.searchParams.set("redirect_url", request.url);
+    signInUrl.searchParams.set('redirect_url', request.url);
     return NextResponse.redirect(signInUrl);
   }
 
@@ -46,7 +46,7 @@ export const config = {
      * - public folder
      * - public folder
      */
-    "/((?!static|.*\\..*|_next|favicon.ico).*)",
-    "/",
+    '/((?!static|.*\\..*|_next|favicon.ico).*)',
+    '/',
   ],
 };

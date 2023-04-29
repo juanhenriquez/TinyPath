@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
 // assets
-import ArrowUpIcon from "@/assets/icons/arrow-up.svg";
-import ArrowDownIcon from "@/assets/icons/arrow-down.svg";
-import { useRouter, usePathname, useSearchParams } from "next/navigation";
-import { useTransition } from "react";
+import ArrowUpIcon from '@/assets/icons/arrow-up.svg';
+import ArrowDownIcon from '@/assets/icons/arrow-down.svg';
+import { useRouter, usePathname, useSearchParams } from 'next/navigation';
+import { useTransition } from 'react';
 
 export default function LinksTableHeader() {
   const router = useRouter();
@@ -13,15 +13,15 @@ export default function LinksTableHeader() {
 
   const [, startTransition] = useTransition();
 
-  const countOrder = searchParams.get("count");
-  const createdAtOrder = searchParams.get("createdAt");
+  const countOrder = searchParams.get('count');
+  const createdAtOrder = searchParams.get('createdAt');
 
   function onSortByClick() {
-    const newCountOrder = countOrder === "desc" ? "asc" : "desc";
+    const newCountOrder = countOrder === 'desc' ? 'asc' : 'desc';
     const params = new URLSearchParams(window.location.search);
 
-    params.set("count", newCountOrder);
-    params.delete("createdAt");
+    params.set('count', newCountOrder);
+    params.delete('createdAt');
 
     startTransition(() => {
       router.replace(`${pathname}?${params.toString()}`);
@@ -29,11 +29,11 @@ export default function LinksTableHeader() {
   }
 
   function onSortByDate() {
-    const newCreatedAtOrder = createdAtOrder === "desc" ? "asc" : "desc";
+    const newCreatedAtOrder = createdAtOrder === 'desc' ? 'asc' : 'desc';
     const params = new URLSearchParams(window.location.search);
 
-    params.set("createdAt", newCreatedAtOrder);
-    params.delete("count");
+    params.set('createdAt', newCreatedAtOrder);
+    params.delete('count');
 
     startTransition(() => {
       router.replace(`${pathname}?${params.toString()}`);
@@ -45,28 +45,30 @@ export default function LinksTableHeader() {
       <tr>
         <th
           scope="col"
-          className="py-3 pl-4 pr-3 text-left text-xs font-semibold text-foreground sm:pl-6"
+          className="text-foreground py-3 pl-4 pr-3 text-left text-xs font-semibold sm:pl-6"
         >
           Name
         </th>
         <th
           scope="col"
-          className="px-3 py-3 text-left text-xs font-semibold text-foreground"
+          className="text-foreground px-3 py-3 text-left text-xs font-semibold"
         >
-          <button className="flex gap-2 items-center" onClick={onSortByClick}>
+          <button className="flex items-center gap-2" onClick={onSortByClick}>
             Clicks
-            {countOrder === "desc" && <ArrowDownIcon width={12} height={12} />}
-            {countOrder === "asc" && <ArrowUpIcon width={12} height={12} />}
+            {countOrder === 'desc' && <ArrowDownIcon width={12} height={12} />}
+            {countOrder === 'asc' && <ArrowUpIcon width={12} height={12} />}
           </button>
         </th>
         <th
           scope="col"
-          className="px-3 py-3 text-left text-xs font-semibold text-foreground"
+          className="text-foreground px-3 py-3 text-left text-xs font-semibold"
         >
-          <button className="flex gap-2 items-center" onClick={onSortByDate}>
+          <button className="flex items-center gap-2" onClick={onSortByDate}>
             Created At
-            {createdAtOrder === "desc" && <ArrowDownIcon width={12} height={12} />}
-            {createdAtOrder === "asc" && <ArrowUpIcon width={12} height={12} />}
+            {createdAtOrder === 'desc' && (
+              <ArrowDownIcon width={12} height={12} />
+            )}
+            {createdAtOrder === 'asc' && <ArrowUpIcon width={12} height={12} />}
           </button>
         </th>
         <th scope="col" className="relative py-3 pl-3 pr-4 sm:pr-6">

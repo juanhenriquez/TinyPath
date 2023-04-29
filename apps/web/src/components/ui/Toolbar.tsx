@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import * as ToolbarPrimitive from "@radix-ui/react-toolbar";
-import { ComponentPropsWithoutRef, ElementRef, forwardRef } from "react";
+import * as ToolbarPrimitive from '@radix-ui/react-toolbar';
+import { ComponentPropsWithoutRef, ElementRef, forwardRef } from 'react';
 
-import { cn } from "@/utils";
+import { cn } from '@/utils';
 
 const ToolbarButton = ToolbarPrimitive.Button;
 const ToolbarLink = ToolbarPrimitive.ToolbarLink;
@@ -14,7 +14,7 @@ const ToolbarRoot = forwardRef<
 >(({ className, children, ...props }, ref) => (
   <ToolbarPrimitive.Root
     ref={ref}
-    className={cn("flex w-full min-w-max rounded-md", className)}
+    className={cn('flex w-full min-w-max rounded-md', className)}
     {...props}
   >
     {children}
@@ -29,10 +29,7 @@ const ToolbarToogleGroup = forwardRef<
 >(({ className, children, ...props }, ref) => (
   <ToolbarPrimitive.ToggleGroup
     ref={ref}
-    className={cn(
-      "flex gap-1",
-      className
-    )}
+    className={cn('flex gap-1', className)}
     {...props}
   >
     {children}
@@ -47,8 +44,8 @@ const ToolbarToggleItem = forwardRef<
   <ToolbarPrimitive.ToggleItem
     ref={ref}
     className={cn(
-      "flex-shrink-0 flex-grow-0 basis-auto text-muted-foreground p-[6px] rounded inline-flex text-xs leading-none items-center justify-center outline-none hover:bg-muted hover:text-muted-foreground focus:relative focus:shadow-[0_0_0_2px] focus:shadow-primary/70 data-[state=on]:bg-muted data-[state=on]:text-foreground",
-      className
+      'text-muted-foreground hover:bg-muted hover:text-muted-foreground focus:shadow-primary/70 data-[state=on]:bg-muted data-[state=on]:text-foreground inline-flex flex-shrink-0 flex-grow-0 basis-auto items-center justify-center rounded p-[6px] text-xs leading-none outline-none focus:relative focus:shadow-[0_0_0_2px]',
+      className,
     )}
     {...props}
   >
@@ -63,7 +60,7 @@ const ToolbarSeparator = forwardRef<
 >(({ className, children, ...props }, ref) => (
   <ToolbarPrimitive.Separator
     ref={ref}
-    className={cn("w-[1px] bg-border mx-3", className)}
+    className={cn('bg-border mx-3 w-[1px]', className)}
     {...props}
   />
 ));

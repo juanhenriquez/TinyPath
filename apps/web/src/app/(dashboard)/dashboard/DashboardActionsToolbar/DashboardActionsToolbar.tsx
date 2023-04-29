@@ -1,28 +1,28 @@
-"use client";
+'use client';
 
-import { useTransition } from "react";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useTransition } from 'react';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 // icons
-import Rows01Icon from "@/assets/icons/rows-01.svg";
-import TableIcon from "@/assets/icons/table.svg";
-import FileDownload from "@/assets/icons/file-download.svg";
+import Rows01Icon from '@/assets/icons/rows-01.svg';
+import TableIcon from '@/assets/icons/table.svg';
+import FileDownload from '@/assets/icons/file-download.svg';
 
 // components
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from "@/components/ui/Tooltip";
-import CreateLinkButton from "./CreateLinkButton";
-import SortLinksDropdownMenu from "./SortLinksDrodownMenu";
+} from '@/components/ui/Tooltip';
+import CreateLinkButton from './CreateLinkButton';
+import SortLinksDropdownMenu from './SortLinksDrodownMenu';
 import {
   ToolbarLink,
   ToolbarRoot,
   ToolbarSeparator,
-} from "@/components/ui/Toolbar";
-import { ToolbarToggleItem, ToolbarToogleGroup } from "@/components/ui/Toolbar";
-import { buttonVariants } from "@/components/ui/Button";
+} from '@/components/ui/Toolbar';
+import { ToolbarToggleItem, ToolbarToogleGroup } from '@/components/ui/Toolbar';
+import { buttonVariants } from '@/components/ui/Button';
 
 export default function DashboardActionsToolbar() {
   const router = useRouter();
@@ -31,15 +31,15 @@ export default function DashboardActionsToolbar() {
 
   const [, startTransition] = useTransition();
 
-  const layout = searchParams.get("layout") ?? "table";
+  const layout = searchParams.get('layout') ?? 'table';
 
   function onChangeLayout(value: string) {
     if (!value) return;
 
     const params = new URLSearchParams(window.location.search);
-    params.set("layout", value);
-    params.delete("count");
-    params.delete("createdAt");
+    params.set('layout', value);
+    params.delete('count');
+    params.delete('createdAt');
 
     startTransition(() => {
       router.replace(`${pathname}?${params.toString()}`);
@@ -47,13 +47,13 @@ export default function DashboardActionsToolbar() {
   }
 
   async function onExport() {
-    const response = await fetch("/api/links/download");
+    const response = await fetch('/api/links/download');
     console.log(response);
   }
 
   return (
     <ToolbarRoot className="p-1">
-      {layout === "group" && (
+      {layout === 'group' && (
         <>
           <SortLinksDropdownMenu />
           <ToolbarSeparator />
@@ -88,9 +88,9 @@ export default function DashboardActionsToolbar() {
           target="_blank"
           href="/api/links/download"
           className={buttonVariants({
-            size: "xs",
-            variant: "secondary",
-            className: "flex gap-2",
+            size: 'xs',
+            variant: 'secondary',
+            className: 'flex gap-2',
           })}
         >
           <FileDownload width={16} height={16} />

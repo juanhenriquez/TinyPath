@@ -54,7 +54,8 @@ export async function PUT(
       ...(data.name && { name: data.name }),
 
       // Reset the count if the original URI has changed
-      count: existingLink.uri === updatedUrlComponents.uri ? existingLink.count : 0,
+      count:
+        existingLink.uri === updatedUrlComponents.uri ? existingLink.count : 0,
     },
   });
 

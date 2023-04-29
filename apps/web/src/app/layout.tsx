@@ -1,7 +1,7 @@
-import { Providers } from "@/components/Providers";
-import { ClerkProvider } from "@clerk/nextjs/app-beta";
+import { Providers } from '@/components/Providers';
+import { ClerkProvider } from '@clerk/nextjs/app-beta';
 
-import "./../styles/global.css";
+import './../styles/global.css';
 
 export default function RootLayout({
   children,

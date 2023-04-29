@@ -3,6 +3,7 @@
 import { ZodError, z } from 'zod';
 import useSWRMutation from 'swr/mutation';
 import { useRouter } from 'next/navigation';
+import type { Link } from '@tinypath/database';
 import { useState, useTransition } from 'react';
 
 // icons
@@ -25,8 +26,7 @@ import { Spinner } from '@/components/ui/Spinner';
 import { ToolbarButton } from '@/components/ui/Toolbar';
 
 // libs
-import { urlRegex } from '@/lib/url';
-import { Link } from '@tinypath/database';
+import { urlRegex } from '@/utils';
 
 const createOrUpdateLinkFormSchema = z.object({
   name: z.string().optional(),
@@ -97,7 +97,10 @@ export default function CreateLinkButton({
     setErrors(null);
 
     try {
-      const data = createOrUpdateLinkFormSchema.parse({ link: linkOriginalUrl, name });
+      const data = createOrUpdateLinkFormSchema.parse({
+        link: linkOriginalUrl,
+        name,
+      });
       trigger(data);
     } catch (error) {
       if (error instanceof ZodError) {

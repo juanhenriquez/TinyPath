@@ -1,12 +1,12 @@
-"use client";
+'use client';
 
-import { useTransition } from "react";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useTransition } from 'react';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 // icons
-import ArrowUpIcon from "@/assets/icons/arrow-up.svg";
-import SortIcon from "@/assets/icons/switch-vertical.svg";
-import ArrowDownIcon from "@/assets/icons/arrow-down.svg";
+import ArrowUpIcon from '@/assets/icons/arrow-up.svg';
+import SortIcon from '@/assets/icons/switch-vertical.svg';
+import ArrowDownIcon from '@/assets/icons/arrow-down.svg';
 
 // components
 import {
@@ -16,9 +16,9 @@ import {
   DropdownMenuRadioItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/DropdownMenu";
-import { ToolbarButton } from "@/components/ui/Toolbar";
-import { Button } from "@/components/ui/Button";
+} from '@/components/ui/DropdownMenu';
+import { ToolbarButton } from '@/components/ui/Toolbar';
+import { Button } from '@/components/ui/Button';
 
 export default function SortLinksDropdownMenu() {
   const router = useRouter();
@@ -27,14 +27,14 @@ export default function SortLinksDropdownMenu() {
 
   const [, startTransition] = useTransition();
 
-  const countOrder = searchParams.get("count") || '';
-  const createdAtOrder = searchParams.get("createdAt") || '';
+  const countOrder = searchParams.get('count') || '';
+  const createdAtOrder = searchParams.get('createdAt') || '';
 
   function onChangeCountOrder(value: string) {
     if (!value) return;
 
     const params = new URLSearchParams(window.location.search);
-    params.set("count", value);
+    params.set('count', value);
 
     startTransition(() => {
       router.replace(`${pathname}?${params.toString()}`);
@@ -45,7 +45,7 @@ export default function SortLinksDropdownMenu() {
     if (!value) return;
 
     const params = new URLSearchParams(window.location.search);
-    params.set("createdAt", value);
+    params.set('createdAt', value);
 
     startTransition(() => {
       router.replace(`${pathname}?${params.toString()}`);
