@@ -23,7 +23,7 @@ export default function LinkActions({ link }: { link: Link }) {
   return (
     <div className="flex gap-2 justify-end">
       <Tooltip>
-        <TooltipTrigger>
+        <TooltipTrigger asChild>
           <a
             className={cn(
               buttonVariants({
@@ -41,7 +41,7 @@ export default function LinkActions({ link }: { link: Link }) {
         <TooltipContent>Open Link</TooltipContent>
       </Tooltip>
       <Tooltip>
-        <TooltipTrigger>
+        <TooltipTrigger asChild>
           <Button
             size="xs"
             variant="ghost"
@@ -56,7 +56,7 @@ export default function LinkActions({ link }: { link: Link }) {
         <TooltipContent>Copy Link</TooltipContent>
       </Tooltip>
       <Tooltip>
-        <TooltipTrigger>
+        <TooltipTrigger asChild>
           <NextLink
             className={cn(
               buttonVariants({

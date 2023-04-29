@@ -33,7 +33,7 @@ export default async function DashboardPage({
               Review and manage all your links
             </p>
           </div>
-          <div className="flex w-full sm:w-auto overflow-x-scroll">
+          <div className="flex w-full sm:w-auto overflow-x-auto">
             <DashboardActionsToolbar />
           </div>
         </div>

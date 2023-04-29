@@ -17,13 +17,12 @@ import {
 import CreateLinkButton from "./CreateLinkButton";
 import SortLinksDropdownMenu from "./SortLinksDrodownMenu";
 import {
-  ToolbarButton,
   ToolbarLink,
   ToolbarRoot,
   ToolbarSeparator,
 } from "@/components/ui/Toolbar";
 import { ToolbarToggleItem, ToolbarToogleGroup } from "@/components/ui/Toolbar";
-import { Button, buttonVariants } from "@/components/ui/Button";
+import { buttonVariants } from "@/components/ui/Button";
 
 export default function DashboardActionsToolbar() {
   const router = useRouter();
@@ -53,7 +52,7 @@ export default function DashboardActionsToolbar() {
   }
 
   return (
-    <ToolbarRoot>
+    <ToolbarRoot className="p-1">
       {layout === "group" && (
         <>
           <SortLinksDropdownMenu />

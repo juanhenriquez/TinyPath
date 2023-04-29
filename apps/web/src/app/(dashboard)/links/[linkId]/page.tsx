@@ -5,6 +5,8 @@ import { getLink } from "@/lib/links";
 
 // components
 import BackToAllLinks from "./BackToAllLinks";
+import CreateLinkButton from "../../dashboard/DashboardActionsToolbar/CreateLinkButton";
+import { ToolbarRoot } from "@/components/ui/Toolbar";
 
 export default async function LinkPage({
   params,
@@ -20,13 +22,20 @@ export default async function LinkPage({
       <div className="flex flex-col gap-6 w-full items-start">
         <BackToAllLinks />
         <div className="w-full overflow-hidden bg-card shadow border-[0.5px] border-border rounded-lg">
-          <div className="px-4 py-6 sm:px-6">
-            <h3 className="text-xs font-semibold text-foreground">
-              {link.name || link.uri}
-            </h3>
-            <p className="max-w-2xl text-xs text-muted-foreground">
-              {link.shortened_uri}
-            </p>
+          <div className="flex justify-between px-4 py-6 sm:px-6 w-full">
+            <div className="flex flex-col">
+              <h3 className="text-xs font-semibold text-foreground">
+                {link.name || link.uri}
+              </h3>
+              <p className="max-w-2xl text-xs text-muted-foreground">
+                {link.shortened_uri}
+              </p>
+            </div>
+            <div>
+              <ToolbarRoot>
+                <CreateLinkButton currentLink={link} />
+              </ToolbarRoot>
+            </div>
           </div>
           <div className="border-t-[0.5px] border-border">
             <dl className="divide-y-[0.5px] divide-border">

@@ -30,6 +30,7 @@
     "@tinypath/config": "*",
     "@tinypath/tsconfig": "*",
     "eslint": "^8.39.0",
+    "prettier-plugin-tailwindcss": "^0.2.8",
     "prisma": "^4.13.0",
     "rimraf": "^5.0.0",
     "tsup": "^6.7.0",
