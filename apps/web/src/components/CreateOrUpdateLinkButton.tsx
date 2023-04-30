@@ -64,7 +64,8 @@ function DialogForm({
     {
       onSuccess: () => {
         // invalidate the links query to refetch the data.
-        queryClient.invalidateQueries(['links']);
+        console.log('invalidating links query');
+        queryClient.invalidateQueries({ queryKey: ['links'] });
 
         // close the dialog and refresh the router.
         startTransition(() => {
