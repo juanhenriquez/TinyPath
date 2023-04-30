@@ -36,7 +36,7 @@ export default function Paginator({
   function onNext() {
     onPageChange(currentPage + 1);
   }
-  
+
   function onPrevious() {
     onPageChange(currentPage - 1);
   }
@@ -56,13 +56,22 @@ export default function Paginator({
         <ChevronLeftIcon
           width={14}
           height={14}
-          className={cn(currentPage === 1 ? 'text-foreground/30' : 'text-foreground')}
+          className={cn(
+            currentPage === 1 ? 'text-foreground/30' : 'text-foreground',
+          )}
         />
       </li>
-      {paginationRange?.map(pageNumber => {
+      {paginationRange?.map((pageNumber, index) => {
         // If the pageItem is a DOT, render the DOTS unicode character
         if (pageNumber === DOTS) {
-          return <li className="list-none select-none">&#8230;</li>;
+          return (
+            <li
+              key={`${pageNumber}-${index}`}
+              className="select-none list-none"
+            >
+              &#8230;
+            </li>
+          );
         }
 
         // Render our Page Pills
