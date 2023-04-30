@@ -46,6 +46,18 @@ export async function PUT(
     data.link,
     existingLink.raw_shortened_path_id,
   );
+
+  const existingLinkWithSameUri = await prisma.link.findFirst({
+    where: { uri: updatedUrlComponents.uri, userId },
+  });
+
+  if (existingLinkWithSameUri) {
+    return NextResponse.json(
+      { message: 'You already have a link with this URL' },
+      { status: 400 },
+    );
+  }
+
   const updatedLink = await prisma.link.update({
     where: { id: existingLink.id },
     data: {
