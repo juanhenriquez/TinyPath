@@ -5,6 +5,8 @@ import { getLinks } from '@/lib/links';
 import LinksTableLayout from './LinksTableLayout';
 import LinksGroupLayout from './LinksGroupLayout';
 import DashboardActionsToolbar from './DashboardActionsToolbar/DashboardActionsToolbar';
+import { Suspense } from 'react';
+import { Spinner } from '@/components/ui/Spinner';
 
 interface DashboardPageSearchParams {
   count?: 'desc' | 'asc';
@@ -18,7 +20,7 @@ export default async function DashboardPage({
   searchParams: DashboardPageSearchParams;
 }) {
   // Get links from database.
-  const links = await getLinks(searchParams);
+  const links = await getLinks(searchParams.createdAt, searchParams.count);
 
   // Get selected layout from search params.
   const layout = searchParams.layout ?? 'table';
@@ -40,9 +42,29 @@ export default async function DashboardPage({
         {links.length ? (
           <div className="mt-8">
             {layout === 'table' ? (
-              <LinksTableLayout links={links} />
+              <Suspense
+                fallback={
+                  <div className="border-border bg-card text-muted-foreground flex w-full items-center justify-center gap-2 rounded-md border-[0.5px] p-4">
+                    <Spinner width={16} height={16} />
+                    <span className="text-xs ">Loading...</span>
+                  </div>
+                }
+              >
+                {/* @ts-expect-error Async Server Component */}
+                <LinksTableLayout searchParams={searchParams} />
+              </Suspense>
             ) : (
-              <LinksGroupLayout links={links} searchParams={searchParams} />
+              <Suspense
+                fallback={
+                  <div className="border-border bg-card text-muted-foreground flex w-full animate-pulse items-center justify-center gap-2 rounded-md border-[0.5px] p-4">
+                    <Spinner width={16} height={16} />
+                    <span className="text-xs ">Loading...</span>
+                  </div>
+                }
+              >
+                {/* @ts-expect-error Async Server Component */}
+                <LinksGroupLayout searchParams={searchParams} />
+              </Suspense>
             )}
           </div>
         ) : (

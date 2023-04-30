@@ -1,10 +1,15 @@
-import { Link } from '@tinypath/database';
+import { getLinks } from '@/lib/links';
 
 // components
 import LinkActions from './LinkActions';
 import LinksTableHeader from './LinksTableHeader';
 
-export default function LinksTableLayout({ links }: { links: Link[] }) {
+export default async function LinksTableLayout({
+  searchParams,
+}: {
+  searchParams: any;
+}) {
+  const links = await getLinks(searchParams.createdAt, searchParams.count);
   return (
     <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
       <div className="inline-block min-w-full px-4 py-2 align-middle lg:px-8">

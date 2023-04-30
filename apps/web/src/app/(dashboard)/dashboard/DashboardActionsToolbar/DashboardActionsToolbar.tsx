@@ -45,12 +45,7 @@ export default function DashboardActionsToolbar() {
       router.replace(`${pathname}?${params.toString()}`);
     });
   }
-
-  async function onExport() {
-    const response = await fetch('/api/links/download');
-    console.log(response);
-  }
-
+  
   return (
     <ToolbarRoot className="p-1">
       {layout === 'group' && (

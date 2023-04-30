@@ -1,8 +1,8 @@
-import NextLink from 'next/link';
-import { Link } from '@tinypath/database';
+import type { Link } from '@tinypath/database';
+
+import { getLinks } from '@/lib/links';
 
 // components
-import { buttonVariants } from '@/components/ui/Button';
 import LinkActions from './LinkActions';
 
 interface LinksGroupLayoutProps {
@@ -13,10 +13,11 @@ interface LinksGroupLayoutProps {
   };
 }
 
-export default function LinksGroupLayout({
-  links,
+export default async function LinksGroupLayout({
   searchParams,
 }: LinksGroupLayoutProps) {
+  const links = await getLinks(searchParams.createdAt, searchParams.count);
+  
   // Group links by date by creating an object with the date as
   // the key and an array of links as the value.
   const linksGroupedByDate = links.length

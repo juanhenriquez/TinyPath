@@ -6,7 +6,7 @@ interface SpinnerProps {
 
 export function Spinner({ width, height, size = 16 }: SpinnerProps) {
   return (
-    <div className="ease linear text-gray11 animate-spin">
+    <div style={{ width, height }} className="ease linear text-gray11 animate-spin">
       <svg
         width={width || size}
         height={height || size}

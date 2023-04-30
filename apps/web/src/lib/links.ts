@@ -19,13 +19,7 @@ type SortOption = 'asc' | 'desc';
  *
  */
 export const getLinks = cache(
-  async ({
-    count,
-    createdAt = 'desc',
-  }: {
-    count?: SortOption;
-    createdAt?: SortOption;
-  }) => {
+  async (createdAt: SortOption = 'desc', count?: SortOption) => {
     const { userId } = auth();
 
     let orderBy = [];
