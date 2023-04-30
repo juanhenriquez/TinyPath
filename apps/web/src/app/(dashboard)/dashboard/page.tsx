@@ -1,12 +1,13 @@
+import { Suspense } from 'react';
+
 // lib
 import { getLinks } from '@/lib/links';
 
 // components
 import LinksTableLayout from './LinksTableLayout';
 import LinksGroupLayout from './LinksGroupLayout';
-import DashboardActionsToolbar from './DashboardActionsToolbar/DashboardActionsToolbar';
-import { Suspense } from 'react';
 import { Spinner } from '@/components/ui/Spinner';
+import DashboardActionsToolbar from './DashboardActionsToolbar/DashboardActionsToolbar';
 
 interface DashboardPageSearchParams {
   count?: 'desc' | 'asc';
@@ -42,17 +43,7 @@ export default async function DashboardPage({
         {links.length ? (
           <div className="mt-8">
             {layout === 'table' ? (
-              <Suspense
-                fallback={
-                  <div className="border-border bg-card text-muted-foreground flex w-full items-center justify-center gap-2 rounded-md border-[0.5px] p-4">
-                    <Spinner width={16} height={16} />
-                    <span className="text-xs ">Loading...</span>
-                  </div>
-                }
-              >
-                {/* @ts-expect-error Async Server Component */}
-                <LinksTableLayout searchParams={searchParams} />
-              </Suspense>
+              <LinksTableLayout />
             ) : (
               <Suspense
                 fallback={

@@ -1,10 +1,10 @@
 'use client';
 
 import { ZodError, z } from 'zod';
-import useSWRMutation from 'swr/mutation';
 import { useRouter } from 'next/navigation';
 import type { Link } from '@tinypath/database';
 import { useState, useTransition } from 'react';
+import { useQueryClient } from '@tanstack/react-query';
 
 // icons
 import PlusIcon from '@/assets/icons/plus.svg';
@@ -28,6 +28,9 @@ import { ToolbarButton } from '@/components/ui/Toolbar';
 // libs
 import { urlRegex } from '@/utils';
 
+// queries
+import useMutationCreateOrUpdateLink from '@/queries/useMutationCreateOrUpdateLink';
+
 const createOrUpdateLinkFormSchema = z.object({
   name: z.string().optional(),
   link: z.string().regex(urlRegex, 'Invalid URL'),
@@ -40,6 +43,7 @@ function DialogForm({
   currentLink?: Link;
   onDialogClose: () => void;
 }) {
+  const queryClient = useQueryClient();
   const [isPending, startTransition] = useTransition();
 
   // keep track of client side errors.
@@ -54,35 +58,15 @@ function DialogForm({
   );
   const [name, setName] = useState(currentLink?.name || '');
 
-  // use swr mutation to create or update the link.
-  const apiMethod = currentLink ? 'PUT' : 'POST';
-  const apiEndpoint = currentLink
-    ? `/api/links/${currentLink.id}`
-    : '/api/links';
-  const {
-    error,
-    reset,
-    trigger,
-    isMutating: isLoading,
-  } = useSWRMutation(
-    apiEndpoint,
-    async (url, { arg }: { arg: { link: string; name?: string } }) => {
-      const response = await fetch(url, {
-        method: apiMethod,
-        body: JSON.stringify(arg),
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.message);
-      }
-
-      return data;
-    },
+  // use react-query mutation to create or update the link.
+  const { mutate, isLoading, error, reset } = useMutationCreateOrUpdateLink(
+    { currentLink },
     {
-      throwOnError: false,
       onSuccess: () => {
+        // invalidate the links query to refetch the data.
+        queryClient.invalidateQueries(['links']);
+
+        // close the dialog and refresh the router.
         startTransition(() => {
           onDialogClose();
           router.refresh();
@@ -103,10 +87,9 @@ function DialogForm({
         link: linkOriginalUrl,
         name,
       });
-      trigger(data);
+      mutate(data);
     } catch (error) {
       if (error instanceof ZodError) {
-        console.log(error.format());
         setErrors(error.format());
       }
     }

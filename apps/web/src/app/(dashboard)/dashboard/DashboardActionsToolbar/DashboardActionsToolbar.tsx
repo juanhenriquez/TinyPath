@@ -4,8 +4,8 @@ import { useTransition } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 // icons
-import Rows01Icon from '@/assets/icons/rows-01.svg';
 import TableIcon from '@/assets/icons/table.svg';
+import Rows01Icon from '@/assets/icons/rows-01.svg';
 import FileDownload from '@/assets/icons/file-download.svg';
 
 // components

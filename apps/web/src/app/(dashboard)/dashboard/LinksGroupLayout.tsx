@@ -1,28 +1,38 @@
-import type { Link } from '@tinypath/database';
+'use client';
 
-import { getLinks } from '@/lib/links';
+import type { Link } from '@tinypath/database';
+import { useInView } from 'react-intersection-observer';
+
+// queries
+import useInfiniteLinks from '@/queries/useInfiniteLink';
 
 // components
 import LinkActions from './LinkActions';
+import { useSearchParams } from 'next/navigation';
+import { Spinner } from '@/components/ui/Spinner';
 
-interface LinksGroupLayoutProps {
-  links: Link[];
-  searchParams: {
-    count?: 'desc' | 'asc';
-    createdAt?: 'desc' | 'asc';
-  };
-}
+type SortOption = 'asc' | 'desc' | undefined;
 
-export default async function LinksGroupLayout({
-  searchParams,
-}: LinksGroupLayoutProps) {
-  const links = await getLinks(searchParams.createdAt, searchParams.count);
-  
+export default function LinksGroupLayout() {
+  const searchParams = useSearchParams();
+  const {
+    data,
+    hasNextPage: hasMoreLinks,
+    fetchNextPage: fetchMoreLinks,
+    isLoading: isLoadingMoreLinks,
+    isFetchingNextPage: isFetchingMoreLinks,
+  } = useInfiniteLinks({
+    take: 15,
+    count: searchParams.get('count') as SortOption,
+    createdAt: searchParams.get('createdAt') as SortOption,
+  });
+
   // Group links by date by creating an object with the date as
   // the key and an array of links as the value.
-  const linksGroupedByDate = links.length
+  const links = data?.pages?.flatMap(page => page.links);
+  const linksGroupedByDate = links?.length
     ? links.reduce<{
-        [key: string]: (typeof links)[0][];
+        [key: string]: Link[];
       }>((prev, link) => {
         const date = new Date(link.created_date).toLocaleDateString();
 
@@ -36,11 +46,20 @@ export default async function LinksGroupLayout({
       }, {})
     : {};
 
+  const { ref } = useInView({
+    threshold: 1,
+    onChange: inView => {
+      if (inView && hasMoreLinks) {
+        fetchMoreLinks();
+      }
+    },
+  });
+
   return (
-    <div className="flex flex-col gap-8">
+    <div className="relative flex flex-col gap-8 pb-[80px]">
       {Object.keys(linksGroupedByDate)
         .sort((a, b) => {
-          if (searchParams.createdAt === 'asc') {
+          if (searchParams.get('createdAt') === 'asc') {
             return new Date(a).getTime() - new Date(b).getTime();
           } else {
             return new Date(b).getTime() - new Date(a).getTime();
@@ -61,7 +80,7 @@ export default async function LinksGroupLayout({
               <div className="bg-card border-border flex flex-col overflow-hidden rounded-md border-[0.5px] shadow-sm">
                 {currentLinks
                   .sort((a, b) => {
-                    if (searchParams.count === 'asc') {
+                    if (searchParams.get('count') === 'asc') {
                       return a.count - b.count;
                     } else {
                       return b.count - a.count;
@@ -90,6 +109,18 @@ export default async function LinksGroupLayout({
             </div>
           );
         })}
+      {!isLoadingMoreLinks && hasMoreLinks && (
+        <div
+          ref={ref}
+          className="pointer-events-none absolute bottom-0 left-0 flex h-[40px] w-full items-center justify-center"
+        >
+          {isFetchingMoreLinks && (
+            <div className="absolute bottom-8 flex w-full items-center justify-center">
+              <Spinner width={20} height={20} />
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 }
