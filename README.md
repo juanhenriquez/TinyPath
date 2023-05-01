@@ -67,24 +67,22 @@ There are 2 layout modes available: Table and Group.
 Boths layouts make use of the `GET /api/links` endpoint which returns a paginated set of results
 based on some query params like `take`, `page`, etc.
 
-For Demostration purposes, the table layout uses a regular react-query's `useQuery` to fetch the paginated set of data,
-while the group layout uses `useInfiniteQuery` to demostrate the capabilities of the 2 methods of showing paginated sets of data.
+For demostration purposes, the **Table layout** uses a regular react-query's `useQuery` to fetch the paginated set of data,
+while the **Group layout** uses `useInfiniteQuery` to demostrate the capabilities of the 2 methods of showing paginated sets of data.
 
 #### Link Creation:
 
 ![dashboard link creation](assets/dashboard-create-button.png)
 
 
-From the dashboard, users are going to havea "Create Link" button available at the top of the page.
-This button shows a custom dialog component with the form to create the link.
+From the dashboard, users have a “Create Link” button at the top of the page. This button displays a custom dialog component with a form to create the link. 
 
-Users can specify an optional name in case they want to give an easy-to-remember name to their links.
+Users can give the link an optional, easy-to-remember name.
 
 
 ![dashboard dialog link creation](assets/dashboard-create-dialog.png)
 
-Once the user submits the form, we update the UI inmmediatly by invalidatiing the queries in charge of fetching the
-list of links.
+Once the user submits the form, we immediately update the UI by invalidating the queries responsible for retrieving the list of links.
 
 ### Link Details page:
 
@@ -93,7 +91,7 @@ list of links.
 
 Users can go to `/links/[linkId]` page and see the details of each link they created.
 
-They can also update their link's original, name or both at the same time. Under the hood this sends a `PUT` requests to `/api/links/[linkId]` to update the link.
+Users can update the original URL of their link. This sends a `PUT` request to `/api/links/[linkId]` behind the scenes to make the change.
 
 ![link details page](assets/details-update-button.png)
 
