@@ -55,6 +55,14 @@ export default function LinksGroupLayout() {
     },
   });
 
+  if (!links?.length) {
+    return (
+      <div className="text-muted-foreground bg-card border-border flex min-h-[80px] items-center justify-center rounded-md border-[0.5px] border-dashed text-xs shadow-sm">
+        No links found
+      </div>
+    );
+  }
+
   return (
     <div className="relative flex flex-col gap-8 pb-[80px]">
       {Object.keys(linksGroupedByDate)

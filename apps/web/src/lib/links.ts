@@ -2,56 +2,7 @@ import 'server-only';
 
 import { cache } from 'react';
 import { auth } from '@clerk/nextjs/app-beta';
-import { Link, prisma } from '@tinypath/database';
-
-import initialLinks from '@/data/links.json';
-
-import { env } from '@/config/env/server';
-
-type SortOption = 'asc' | 'desc';
-
-/**
- * Get all links created by the user and sort them by count and created date.
- *
- * This function is using react's new cache api to cache the result, so we
- * can use it in our server components without worrying making duplicate
- * calls to the database.
- *
- */
-export const getLinks = cache(
-  async (createdAt: SortOption = 'desc', count?: SortOption) => {
-    const { userId } = auth();
-
-    let orderBy = [];
-
-    if (count) {
-      orderBy.push({ count });
-    }
-
-    if (createdAt) {
-      orderBy.push({ created_date: createdAt });
-    }
-
-    const data = await prisma.link.findMany({ orderBy, where: { userId } });
-
-    // NOTE: THIS IS ONLY FOR DEMO PURPOSES
-    // If the user doesn't have any links, create some initial links
-    if (!data || data.length === 0) {
-      await prisma.link.createMany({
-        data: initialLinks.map(link => ({
-          ...link,
-          userId,
-          shortened_uri: `${env.baseUrl}/${link.raw_shortened_path_id}`,
-          created_date: new Date(link.created_date),
-        })),
-      });
-
-      return initialLinks as unknown as Link[];
-    }
-
-    return data;
-  },
-);
+import { prisma } from '@tinypath/database';
 
 /**
  * Get a link given the link id.

@@ -1,8 +1,11 @@
 import { z } from 'zod';
 import { NextResponse } from 'next/server';
-import { prisma } from '@tinypath/database';
+import { Link, prisma } from '@tinypath/database';
 import { auth } from '@clerk/nextjs/app-beta';
 import { getShortenedUrlComponents } from '@/lib/url';
+
+import initialLinks from '@/data/links.json';
+import { env } from '@/config/env/server';
 
 const createUrlInputSchema = z.object({
   name: z.string().optional(),
@@ -89,12 +92,34 @@ export async function GET(req: Request) {
     orderBy.push({ created_date: createdAtOrder });
   }
 
-  const links = await prisma.link.findMany({
+  let links: Link[] = [];
+  links = await prisma.link.findMany({
     take,
     where: { userId },
     orderBy: orderBy.length ? orderBy : [{ created_date: 'desc' }],
     skip: (page - 1) * take,
   });
+
+  // NOTE: THIS IS ONLY FOR DEMO PURPOSES
+  // If the user doesn't have any links, create some initial links
+  if (!links || links.length === 0) {
+    // Create the initial links
+    await prisma.link.createMany({
+      data: initialLinks.map(({ id, ...link }) => ({
+        ...link,
+        userId,
+        shortened_uri: `${env.baseUrl}/${link.raw_shortened_path_id}`,
+        created_date: new Date(link.created_date),
+      })),
+    });
+
+    links = await prisma.link.findMany({
+      take,
+      where: { userId },
+      orderBy: orderBy.length ? orderBy : [{ created_date: 'desc' }],
+      skip: (page - 1) * take,
+    });
+  }
 
   const totalLinksCount = await prisma.link.count({
     where: { userId },

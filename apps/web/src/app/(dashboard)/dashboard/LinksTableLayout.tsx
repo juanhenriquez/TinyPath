@@ -42,6 +42,14 @@ export default function LinksTableLayout() {
     );
   }
 
+  if (!data?.links?.length) {
+    return (
+      <div className="text-muted-foreground bg-card border-border flex min-h-[80px] items-center justify-center rounded-md border-[0.5px] border-dashed text-xs shadow-sm">
+        No links found
+      </div>
+    );
+  }
+
   return (
     <div className="flex w-full flex-col items-center gap-4">
       <div className="-mx-4 -my-2 w-full overflow-x-auto sm:-mx-6 lg:-mx-8">
