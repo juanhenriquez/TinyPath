@@ -105,12 +105,14 @@ export async function GET(req: Request) {
   if (!links || links.length === 0) {
     // Create the initial links
     await prisma.link.createMany({
-      data: initialLinks.map(({ id, ...link }) => ({
-        ...link,
-        userId,
-        shortened_uri: `${env.baseUrl}/${link.raw_shortened_path_id}`,
-        created_date: new Date(link.created_date),
-      })),
+      data: initialLinks.map(({ id, ...link }) => {
+        const urlComponents = getShortenedUrlComponents(link.uri);
+        return {
+          ...urlComponents,
+          userId,
+          created_date: new Date(link.created_date),
+        }
+      }),
     });
 
     links = await prisma.link.findMany({
