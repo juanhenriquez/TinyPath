@@ -24,7 +24,7 @@ export default async function LinkPage({
       <div className="flex w-full flex-col items-start gap-6">
         <BackToAllLinks />
         <div className="bg-card border-border w-full overflow-hidden rounded-lg border-[0.5px] shadow">
-          <div className="flex w-full justify-between px-4 py-6 sm:px-6">
+          <div className="flex w-full flex-col gap-2 justify-between px-4 py-6 sm:flex-row sm:px-6">
             <div className="flex flex-col">
               <h3 className="text-foreground max-w-xs overflow-hidden text-ellipsis whitespace-nowrap text-xs font-semibold">
                 {link.name || link.uri}

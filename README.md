@@ -36,14 +36,20 @@ To see the app live, you can visit it at https://tinypath.vercel.app
 
 ### Set up
 
-In order to run this project locally, you will need to use the docker-compose.yml to deploy
-a local Postgres server.
+1. In the root of the project there is a `.env.example` file. You need to copy this file and create a new `.env` file (Without the .example at the end).
+2. Then, go to the `/apps/web/env.local.example` and copy the file and create a new one called just `.env.local`.
+3. In order to run this project locally, you will need to use the `docker-compose.yml` file to deploy the local Postgres server.
 
 ```bash
 docker-compose up
 ```
 
-Once the database is ready, you can start the development server by running:
+4. Once the database is ready, you need to run the Primsa migrations to create the tables we need in the db:
+```bash
+npm run db:push
+```
+
+5. You are ready to start the development server by running:
 
 ```bash
 npm run dev
