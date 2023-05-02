@@ -17,6 +17,7 @@ To see the app live, you can visit it at https://tinypath.vercel.app
 
 ### Features
 
+- Monorepo Setup.
 - Authentication (Each user has their own links).
 - Dashboard Page:
   - Allows user to create a shortened link
@@ -93,6 +94,8 @@ There are only 5 endpoints:
  - `DELETE /api/links/[linkId]`: Delete a link.
 
 ##### Notes:
+- This app uses Clerk as the Authentication provider as it is really a good choice for small to medium projects because of its simplicity, flexibility and developer experience. Plus, their security features are really good.
+- The majority of endpoints of this app are user authenticated.
 - Prisma was the choosen ORM to talk to the Postgress DB because of all the Developer experience (DX) features it offers like type safety queries.
 - All of the endpoints created for this app were created using Next.js 13 Route hanlders.
 - The Prisma schema and all the Prisma related code is within the `database` package.
