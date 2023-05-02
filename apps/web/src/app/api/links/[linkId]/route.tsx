@@ -48,7 +48,7 @@ export async function PUT(
   );
 
   const existingLinkWithSameUri = await prisma.link.findFirst({
-    where: { uri: updatedUrlComponents.uri, userId },
+    where: { uri: updatedUrlComponents.uri, userId, id: { not: linkId } },
   });
 
   if (existingLinkWithSameUri) {
@@ -72,4 +72,32 @@ export async function PUT(
   });
 
   return NextResponse.json({ link: updatedLink });
+}
+
+export async function DELETE(
+  _: Request,
+  { params: { linkId } }: { params: { linkId: string } },
+) {
+  const { userId } = auth();
+
+  if (!userId) {
+    return NextResponse.json({ message: 'Not Authorized' }, { status: 401 });
+  }
+
+  const existingLink = await prisma.link.findUnique({
+    where: { id: linkId },
+  });
+
+  if (!existingLink) {
+    return NextResponse.json(
+      { message: 'This link does not exist' },
+      { status: 400 },
+    );
+  }
+
+  const deletedLink = await prisma.link.delete({
+    where: { id: linkId },
+  });
+
+  return NextResponse.json({ link: deletedLink });
 }

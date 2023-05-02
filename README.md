@@ -4,11 +4,29 @@ TinyPath is a URL shortener app that allows users to create shortened, easy-to-r
 
 ### Tech Stack
 
-- Turborepo
-- Next.js 13 (app dir)
-- Postgres & Prisma
-- Radix UI & TailwindCSS
+- Turborepo: To share packages between apps.
+- Next.js 13: App folder with support for React Server Components.
+- Postgres & Prisma: As the database solution.
+- Radix UI & TailwindCSS: Build the UI with beautiful and highly accessible components.
+- Supbase as the databse provider.
+- Vercel as the hosting of the web app.
 - Clerk for Authentication/Authorization.
+
+### Features
+- Authentication (Each user has their own links).
+- Dashboard Page:
+  - Allows user to create a shortened link
+  - Allows user to see all the links they have created.
+  - Allows user to download a CSV of all the links through the "Export" button.
+  - Allows user to switch between 2 layouts: Table and Group.
+  - Allows user to sort in ascending/descending order for the created date and clicks count.
+  - Allows user to navigate, copy and go to the edit page of each link.
+- Edit Link page:
+  - Allows user to se all the info related to given link.
+  - Allows user to update the link.
+  - Allows user to delete the link.
+- Responsive and modern UI.
+- Fully accessible and navigable with keyboard.
 
 ### Checklist
 - General:

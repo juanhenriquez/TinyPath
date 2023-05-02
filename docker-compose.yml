@@ -5,15 +5,16 @@ volumes:
     driver: local
 
 services:
-  postgres:
+  db:
     platform: linux/amd64
     image: postgres:14.1-alpine
-    container_name: tinypath_postgres
+    container_name: tinypath_db
     restart: always
     ports:
       - 5432:5432
     environment:
       POSTGRES_USER: root
+      POSTGRES_DB: tinypath
       POSTGRES_PASSWORD: sonaisawesome
     volumes:
       - db:/var/lib/postgresql/data

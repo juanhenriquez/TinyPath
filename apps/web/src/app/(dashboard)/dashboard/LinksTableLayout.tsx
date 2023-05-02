@@ -55,9 +55,12 @@ export default function LinksTableLayout() {
       <div className="-mx-4 -my-2 w-full overflow-x-auto sm:-mx-6 lg:-mx-8">
         <div className="inline-block min-w-full px-[0.5px] py-2 align-middle">
           <div className="ring-border overflow-hidden rounded-lg shadow ring-[0.5px] ring-opacity-5">
-            <table className="divide-border min-w-full divide-y-[0.5px]">
+            <table
+              className="divide-border min-w-full divide-y-[0.5px]"
+              data-testid="links-table"
+            >
               <LinksTableHeader />
-              <tbody className="divide-border bg-card divide-y-[0.5px]">
+              <tbody className="divide-border bg-card divide-y-[0.5px]" data-testid="links-table-body">
                 {data?.links?.map(link => (
                   <tr key={link.id}>
                     <td className="text-foreground max-w-[100px] overflow-hidden text-ellipsis whitespace-nowrap py-2 pl-4 pr-3 text-xs font-medium sm:pl-6">

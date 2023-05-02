@@ -58,6 +58,7 @@ export default function LinkActions({ link }: { link: Link }) {
       <Tooltip>
         <TooltipTrigger asChild>
           <NextLink
+            data-testid={`edit-link-button-${link.id}`}
             className={cn(
               buttonVariants({
                 size: 'xs',

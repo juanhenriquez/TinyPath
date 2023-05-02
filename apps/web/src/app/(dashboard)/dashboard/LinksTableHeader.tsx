@@ -53,7 +53,11 @@ export default function LinksTableHeader() {
           scope="col"
           className="text-foreground px-3 py-3 text-left text-xs font-semibold"
         >
-          <button className="flex items-center gap-2" onClick={onSortByClick}>
+          <button
+            className="flex items-center gap-2"
+            onClick={onSortByClick}
+            data-testid="links-table-clicks-header-button"
+          >
             Clicks
             {countOrder === 'desc' && <ArrowDownIcon width={12} height={12} />}
             {countOrder === 'asc' && <ArrowUpIcon width={12} height={12} />}
@@ -63,7 +67,11 @@ export default function LinksTableHeader() {
           scope="col"
           className="text-foreground px-3 py-3 text-left text-xs font-semibold"
         >
-          <button className="flex items-center gap-2" onClick={onSortByDate}>
+          <button
+            className="flex items-center gap-2"
+            onClick={onSortByDate}
+            data-testid="links-table-created-header-button"
+          >
             Created At
             {createdAtOrder === 'desc' && (
               <ArrowDownIcon width={12} height={12} />

@@ -64,7 +64,7 @@ export default function LinksGroupLayout() {
   }
 
   return (
-    <div className="relative flex flex-col gap-8 pb-[80px]">
+    <div className="relative flex flex-col gap-8 pb-[80px]" data-testid="links-group">
       {Object.keys(linksGroupedByDate)
         .sort((a, b) => {
           if (searchParams.get('createdAt') === 'asc') {

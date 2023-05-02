@@ -10,6 +10,8 @@
     "db:push": "turbo run db:push",
     "db:seed": "turbo run db:seed",
     "dev": "turbo run dev",
+    "test:e2e": "DATABASE_URL=postgresql://root:sonaisawesome@127.0.0.1:5432/test turbo run test:e2e",
+    "test:e2e:debug": "DATABASE_URL=postgresql://root:sonaisawesome@127.0.0.1:5432/test turbo run test:e2e:debug",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "db:generate": "turbo run db:generate",
     "lint": "turbo run lint"

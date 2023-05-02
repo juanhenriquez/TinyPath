@@ -1,6 +1,5 @@
 // components
-import LinksTableLayout from './LinksTableLayout';
-import LinksGroupLayout from './LinksGroupLayout';
+import Links from './Links';
 import DashboardActionsToolbar from './DashboardActionsToolbar/DashboardActionsToolbar';
 
 interface DashboardPageSearchParams {
@@ -31,7 +30,7 @@ export default async function DashboardPage({
           </div>
         </div>
         <div className="mt-8">
-          {layout === 'table' ? <LinksTableLayout /> : <LinksGroupLayout />}
+          <Links layout={layout} />
         </div>
       </div>
     </div>

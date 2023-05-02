@@ -62,7 +62,7 @@ export default function DashboardActionsToolbar() {
       >
         <Tooltip>
           <ToolbarToggleItem value="table" asChild>
-            <TooltipTrigger>
+            <TooltipTrigger data-testid="table-layout-button">
               <TableIcon width={16} height={16} />
             </TooltipTrigger>
           </ToolbarToggleItem>
@@ -70,7 +70,7 @@ export default function DashboardActionsToolbar() {
         </Tooltip>
         <Tooltip>
           <ToolbarToggleItem value="group" asChild>
-            <TooltipTrigger>
+            <TooltipTrigger data-testid="group-layout-button">
               <Rows01Icon width={16} height={16} />
             </TooltipTrigger>
           </ToolbarToggleItem>

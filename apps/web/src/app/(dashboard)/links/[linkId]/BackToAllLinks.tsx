@@ -1,8 +1,12 @@
 'use client';
 
-import ArrowNarrowLeftIcon from '@/assets/icons/arrow-narrow-left.svg';
-import { buttonVariants } from '@/components/ui/Button';
 import Link from 'next/link';
+
+// icons
+import ArrowNarrowLeftIcon from '@/assets/icons/arrow-narrow-left.svg';
+
+// components
+import { buttonVariants } from '@/components/ui/Button';
 
 export default function BackToAllLinks() {
   return (

@@ -20,6 +20,14 @@
     "db:push": {
       "cache": false
     },
+    "@tinypath/web#test:e2e": {
+      "cache": false,
+      "dependsOn": ["@tinypath/database#build"]
+    },
+    "@tinypath/web#test:e2e:debug": {
+      "cache": false,
+      "dependsOn": ["@tinypath/database#build", "@tinypath/database#db:push"]
+    },
     "lint": {}
   }
 }

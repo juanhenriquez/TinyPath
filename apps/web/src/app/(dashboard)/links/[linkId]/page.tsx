@@ -5,8 +5,10 @@ import { getLink } from '@/lib/links';
 
 // components
 import BackToAllLinks from './BackToAllLinks';
-import CreateOrUpdateLinkButton from '../../../../components/CreateOrUpdateLinkButton';
 import { ToolbarRoot } from '@/components/ui/Toolbar';
+import CreateOrUpdateLinkButton from '@/components/CreateOrUpdateLinkButton';
+
+import DeleteLinkButton from './DeleteLinkButton';
 
 export default async function LinkPage({
   params,
@@ -24,7 +26,7 @@ export default async function LinkPage({
         <div className="bg-card border-border w-full overflow-hidden rounded-lg border-[0.5px] shadow">
           <div className="flex w-full justify-between px-4 py-6 sm:px-6">
             <div className="flex flex-col">
-              <h3 className="text-foreground text-xs font-semibold">
+              <h3 className="text-foreground max-w-xs overflow-hidden text-ellipsis whitespace-nowrap text-xs font-semibold">
                 {link.name || link.uri}
               </h3>
               <p className="text-muted-foreground max-w-2xl text-xs">
@@ -32,7 +34,8 @@ export default async function LinkPage({
               </p>
             </div>
             <div>
-              <ToolbarRoot>
+              <ToolbarRoot className="flex gap-4">
+                <DeleteLinkButton link={link} />
                 <CreateOrUpdateLinkButton currentLink={link} />
               </ToolbarRoot>
             </div>
@@ -42,7 +45,10 @@ export default async function LinkPage({
               {link.name && (
                 <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                   <dt className="text-foreground text-xs font-medium">Name</dt>
-                  <dd className="text-muted-foreground mt-1 text-xs leading-6 sm:col-span-2 sm:mt-0">
+                  <dd
+                    className="text-muted-foreground mt-1 text-xs leading-6 sm:col-span-2 sm:mt-0"
+                    data-testid="link-name-value"
+                  >
                     {link.name}
                   </dd>
                 </div>
@@ -51,7 +57,10 @@ export default async function LinkPage({
                 <dt className="text-foreground text-xs font-medium">
                   Original URL
                 </dt>
-                <dd className="text-muted-foreground mt-1 text-xs leading-6 sm:col-span-2 sm:mt-0">
+                <dd
+                  className="text-muted-foreground mt-1 max-w-xs overflow-hidden text-ellipsis whitespace-nowrap text-xs leading-6 sm:col-span-2 sm:mt-0"
+                  data-testid="link-uri-value"
+                >
                   {link.uri}
                 </dd>
               </div>
@@ -59,7 +68,10 @@ export default async function LinkPage({
                 <dt className="text-foreground text-xs font-medium">
                   Shortened URL
                 </dt>
-                <dd className="text-muted-foreground mt-1 text-xs leading-6 sm:col-span-2 sm:mt-0">
+                <dd
+                  className="text-muted-foreground mt-1 text-xs leading-6 sm:col-span-2 sm:mt-0"
+                  data-testid="link-shortened-uri-value"
+                >
                   {link.shortened_uri}
                 </dd>
               </div>

@@ -120,6 +120,7 @@ function DialogForm({
               setLinkOriginalUrl(e.target.value);
               setErrors((v: any) => ({ ...v, link: null }));
             }}
+            data-testid="original-url-input"
             placeholder="https://twitter/juanhenriqz"
           />
           {errors?.link?._errors.map((item, i) => (
@@ -143,6 +144,7 @@ function DialogForm({
               setName(e.target.value);
               setErrors((v: any) => ({ ...v, name: null }));
             }}
+            data-testid="url-name-input"
             placeholder="My Awesome Link"
           />
           {errors?.name?._errors.map((item, i) => (
@@ -157,13 +159,18 @@ function DialogForm({
           </span>
         )}
         <div className="flex gap-2">
-          <Button variant="ghost" onClick={onClose}>
+          <Button
+            variant="ghost"
+            onClick={onClose}
+            data-testid="close-create-link-dialog-button"
+          >
             Cancel
           </Button>
           <Button
             className="gap-2"
             disabled={!linkOriginalUrl || isMutating}
             onClick={onCreateLink}
+            data-testid="create-or-update-link-button"
           >
             {isMutating && <Spinner width={16} height={16} />}
             {isMutating
